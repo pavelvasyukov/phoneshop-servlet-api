@@ -18,4 +18,6 @@ public class ArrayListProductDaoTest
     public void testFindProductsNoResults() {
         assertTrue(productDao.findProducts().isEmpty());
     }
+
+
 }

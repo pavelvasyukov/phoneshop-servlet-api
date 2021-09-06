@@ -4,24 +4,21 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
 public class ArrayListProductDao implements ProductDao {
     private List<Product> products;
     private long maxId;
-    private Object obj = new Object();
+    private Object lock = new Object();
 
-    {
+    public ArrayListProductDao(){
         this.products = new ArrayList();
         getSampleProducts();
-
     }
 
     @Override
     public Product getProduct(Long id) throws ProductNotFoundExeption{
-        synchronized (obj){
+        synchronized (lock){
             return products.stream()
                     .filter(product -> id.equals(product.getId()))
                     .findAny()
@@ -31,7 +28,7 @@ public class ArrayListProductDao implements ProductDao {
 
     @Override
     public List<Product> findProducts() {
-        synchronized (obj){
+        synchronized (lock){
             return products.stream()
                     .filter(product -> product.getPrice() != null)
                     .filter(product -> product.getStock() > 0)
@@ -40,7 +37,7 @@ public class ArrayListProductDao implements ProductDao {
 
     @Override
     public void save(Product product) {
-        synchronized (obj){
+        synchronized (lock){
             if(product.getId() == null){
                 product.setId(maxId++);
             }
@@ -49,11 +46,10 @@ public class ArrayListProductDao implements ProductDao {
     }
 
     @Override
-    public void delete(Long id) {
-        synchronized (obj){
-            products = products.stream()
-                    .filter(product -> product.getId() != id)
-                    .collect(Collectors.toList());
+    public void delete(Long id) throws ProductNotFoundExeption {
+        synchronized (lock){
+                products.remove(getProduct(id));
+
         }
     }
 

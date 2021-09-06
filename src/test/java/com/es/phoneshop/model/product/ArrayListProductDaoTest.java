@@ -1,5 +1,6 @@
 package com.es.phoneshop.model.product;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,11 +14,11 @@ public class ArrayListProductDaoTest
 {
     private ProductDao productDao;
     private  Product product;
-
+    private Currency usd = Currency.getInstance("USD");
     @Before
     public void setup() {
         productDao = new ArrayListProductDao();
-        Currency usd = Currency.getInstance("USD");
+
         product = new Product("sgs", "Samsung Galaxy S", new BigDecimal(100), usd, 100, "https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer/Samsung/Samsung%20Galaxy%20S.jpg");
         productDao.save(product);
     }
@@ -45,12 +46,17 @@ public class ArrayListProductDaoTest
     }
 
     @Test
-    public void testDeleteProduct() throws ProductNotFoundExeption {
-        Currency usd = Currency.getInstance("USD");
+    public void testDeleteProduct() throws ProductNotFoundExeption{
         Product deletingProduct = new Product("sgs2", "Samsung Galaxy S II", new BigDecimal(200), usd, 100, "https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer/Samsung/Samsung%20Galaxy%20S%20II.jpg");
         productDao.save(deletingProduct);
         assertNotNull(productDao.getProduct(deletingProduct.getId()));
-        productDao.delete(product.getId());
-        assertFalse(productDao.getProduct(deletingProduct.getId()) == null);
+        productDao.delete(deletingProduct.getId());
+        try{
+        productDao.getProduct(deletingProduct.getId());
+        Assert.fail("expected ProductNotFoundExeption");
+        }catch (ProductNotFoundExeption thrown)
+        {
+
+        }
     }
 }

@@ -26,6 +26,15 @@ public class Product {
         this.stock = stock;
         this.imageUrl = imageUrl;
     }
+    public Product( String code, String description, BigDecimal price, Currency currency, int stock, String imageUrl) {
+        this.id = id;
+        this.code = code;
+        this.description = description;
+        this.price = price;
+        this.currency = currency;
+        this.stock = stock;
+        this.imageUrl = imageUrl;
+    }
 
     public Long getId() {
         return id;

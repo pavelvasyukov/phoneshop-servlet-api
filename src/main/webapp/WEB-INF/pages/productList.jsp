@@ -43,4 +43,8 @@
             </tr>
         </c:forEach>
     </table>
+
+    <c:if test="${productHistory!=null}">
+        <tags:productHistory productHistory="${productHistory}"></tags:productHistory>
+    </c:if>
 </tags:master>

@@ -6,22 +6,7 @@
 <jsp:useBean id="product" type="com.es.phoneshop.model.product.Product" scope="request"/>
 <tags:master pageTitle="Product Details">
 
-    <p>
-        cart: ${cart}
-    </p>
-    <c:if test="${not empty param.message}">
-        <c:set var="messageAboutAdd" value="${product.description} ${param.message}"/>
-        <c:set var="messageAboutAddStyle" value="success"/>
-    </c:if>
-
-    <c:if test="${not empty error}">
-        <c:set var="messageAboutAdd" value="Added to cart failure"/>
-        <c:set var="messageAboutAddStyle" value="error"/>
-    </c:if>
-
-    <div class="${messageAboutAddStyle}">
-            ${messageAboutAdd}
-    </div>
+    <tags:errorInfo error="${error}" messageSuccess="${param.message}"/>
 
     <p>${product.description}</p>
     <table>

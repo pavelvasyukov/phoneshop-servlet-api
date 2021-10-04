@@ -3,5 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
-<jsp:useBean id="cart" type="com.es.phoneshop.cart.Cart" scope="request"/>
+<jsp:useBean id="cart" type="com.es.phoneshop.model.cart.Cart" scope="request"/>
 <a href=${pageContext.servletContext.contextPath}/cart>Cart: ${cart.totalQuantity} items</a>
+Total cost:
+<fmt:formatNumber value="${cart.totalCost}" type="currency"
+currencySymbol="${cart.currency}"/>

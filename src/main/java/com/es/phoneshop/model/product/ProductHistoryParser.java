@@ -1,5 +1,7 @@
 package com.es.phoneshop.model.product;
 
+import com.es.phoneshop.model.dao.ProductDao;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -15,7 +17,7 @@ public class ProductHistoryParser {
         if (productHistoryCookie != null) {
             return Pattern.compile("//").splitAsStream(productHistoryCookie.getValue())
                     .limit(Long.valueOf(3))
-                    .map(productId -> productDao.getProduct(Long.valueOf(productId)))
+                    .map(productId -> productDao.get(Long.valueOf(productId)))
                     .collect(Collectors.toList());
         } else return null;
     }

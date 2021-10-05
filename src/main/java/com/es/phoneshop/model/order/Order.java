@@ -17,11 +17,9 @@ public class Order extends Cart implements GeneralBean {
     private String firstName;
     private String lastName;
     private String phone;
-
     private LocalDate deliveryDate;
     private String deliveryAddress;
     private PaymentMethod paymentMethod;
-
 
     public BigDecimal getDeliveryCost() {
         return deliveryCost;
@@ -86,12 +84,22 @@ public class Order extends Cart implements GeneralBean {
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
-    @Override
-    public Long getId() {return this.id;}
-    @Override
-    public void setId(Long id) {this.id = id;}
 
-    public String getSecureId() {return secureId;}
+    @Override
+    public Long getId() {
+        return this.id;
+    }
 
-    public void setSecureId(String secureId) {this.secureId = secureId;}
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSecureId() {
+        return secureId;
+    }
+
+    public void setSecureId(String secureId) {
+        this.secureId = secureId;
+    }
 }

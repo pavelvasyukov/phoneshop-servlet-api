@@ -5,6 +5,6 @@
 
 <jsp:useBean id="cart" type="com.es.phoneshop.model.cart.Cart" scope="request"/>
 <a href=${pageContext.servletContext.contextPath}/cart>Cart: ${cart.totalQuantity} items</a>
-Total cost:
+Cart cost:
 <fmt:formatNumber value="${cart.totalCost}" type="currency"
 currencySymbol="${cart.currency}"/>

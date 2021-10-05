@@ -1,7 +1,6 @@
 package com.es.phoneshop.model.dao;
 
 import com.es.phoneshop.model.product.Product;
-import com.es.phoneshop.model.product.ProductNotFoundException;
 import com.es.phoneshop.model.product.SortField;
 import com.es.phoneshop.model.product.SortOrder;
 
@@ -14,9 +13,7 @@ import java.util.stream.Collectors;
 
 public class ArrayListProductDao extends GenericDao<Product> implements ProductDao {
     private final List<Product> products;
-    private final  Object lock = new Object();
-
-
+    private final Object lock = new Object();
     private static ProductDao instance;
 
     public static synchronized ProductDao getInstance() {

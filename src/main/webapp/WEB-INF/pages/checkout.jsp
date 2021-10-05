@@ -6,6 +6,8 @@
 <jsp:useBean id="order" type="com.es.phoneshop.model.order.Order" scope="request"/>
 <tags:master pageTitle="Checkout">
 
+
+
     <c:if test="${not empty errors}">
         Error occurred while placing order
     </c:if>
@@ -76,7 +78,7 @@
             <tags:orderFormRow name="firstName" label="First Name" order="${order}" errors="${errors}"/>
             <tags:orderFormRow name="lastName" label="Last Name" order="${order}" errors="${errors}"/>
             <tags:orderFormRow name="phone" label="Phone" order="${order}" errors="${errors}"/>
-            <tags:orderFormRow name="deliveryDate" label="Delivery Date" order="${order}" errors="${errors}"/>
+            <tags:orderFormRow name="deliveryDate" label="Delivery Date" order="${order}" errors="${errors}" id="datepicker" placeholder="Month/Day/Year"/>
             <tags:orderFormRow name="deliveryAddress" label="Delivery Address" order="${order}" errors="${errors}"/>
             <tr>
                 <td>Payment method<span style="color: red">*</span></td>
@@ -88,7 +90,9 @@
                                 <c:when test="${paymenyMethod eq order.paymentMethod}">
                                     <option selected>${paymenyMethod}</option>
                                 </c:when>
-                                <c:otherwise><option>${paymenyMethod}</option></c:otherwise>
+                                <c:otherwise>
+                                    <option>${paymenyMethod}</option>
+                                </c:otherwise>
                             </c:choose>
                         </c:forEach>
                     </select>
@@ -104,4 +108,10 @@
         </p>
     </form>
 
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+    </script>
+    
 </tags:master>

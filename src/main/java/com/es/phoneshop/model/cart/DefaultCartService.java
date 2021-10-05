@@ -75,7 +75,7 @@ public class DefaultCartService implements CartService {
 
     @Override
     public void clearCart(Cart cart) {
-
+        cart.removeItems();
     }
 
     public void recalculateCart(Cart cart) {

@@ -1,8 +1,6 @@
 package com.es.phoneshop.model.dao;
 
-import com.es.phoneshop.model.order.Order;
 import com.es.phoneshop.model.product.Product;
-import com.es.phoneshop.model.product.ProductNotFoundException;
 import com.es.phoneshop.model.product.SortField;
 import com.es.phoneshop.model.product.SortOrder;
 

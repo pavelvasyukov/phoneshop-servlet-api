@@ -11,8 +11,6 @@ public abstract class GenericDao<T extends GeneralBean> implements GeneralDao<T>
     @Override
     public T get(Long id) throws RuntimeException {
         synchronized (lock) {
-            T result;
-
             return itemsList.stream()
                     .filter(item -> id.equals(item.getId()))
                     .findAny()
@@ -23,7 +21,6 @@ public abstract class GenericDao<T extends GeneralBean> implements GeneralDao<T>
     @Override
     public void save(T item) {
         synchronized (lock) {
-
             if (item.getId() == null) {
                 item.setId(maxId++);
             }

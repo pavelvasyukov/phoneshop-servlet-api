@@ -1,4 +1,5 @@
 package com.es.phoneshop.web;
+
 import com.es.phoneshop.model.cart.Cart;
 import com.es.phoneshop.model.cart.CartService;
 import com.es.phoneshop.model.cart.DefaultCartService;
@@ -13,11 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -90,11 +89,15 @@ public class CheckoutPageServlet extends HttpServlet {
 
     private void setDeliveryDate(HttpServletRequest request, Map<String, String> errors, Order order) {
         String deliveryDate = request.getParameter("deliveryDate");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yy");
+        DateTimeFormatter formatter =DateTimeFormatter.ofPattern("MM/dd/yyyy");
         if (deliveryDate == null || deliveryDate.isEmpty()) {
             errors.put("deliveryDate", "Value is required");
         } else {
-                order.setDeliveryDate(LocalDate.parse(deliveryDate,formatter));
+            try {
+                order.setDeliveryDate(LocalDate.parse(deliveryDate, formatter));
+            }catch (DateTimeParseException e){
+                errors.put("deliveryDate", "Value is required");
+            }
         }
     }
 

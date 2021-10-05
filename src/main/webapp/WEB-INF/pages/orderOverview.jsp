@@ -113,9 +113,5 @@
             </td>
         </tr>
     </table>
-    <p>
-        <button>Place order</button>
-    </p>
-
 
 </tags:master>

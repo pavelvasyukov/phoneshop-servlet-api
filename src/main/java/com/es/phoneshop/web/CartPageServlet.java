@@ -1,6 +1,10 @@
 package com.es.phoneshop.web;
 
-import com.es.phoneshop.cart.Cart;
+import com.es.phoneshop.model.cart.Cart;
+import com.es.phoneshop.model.cart.CartService;
+import com.es.phoneshop.model.cart.DefaultCartService;
+import com.es.phoneshop.model.dao.ArrayListProductDao;
+import com.es.phoneshop.model.dao.ProductDao;
 import com.es.phoneshop.model.product.*;
 
 import javax.servlet.ServletConfig;
@@ -11,19 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class CartPageServlet extends HttpServlet {
-    private ProductDao productDao;
+
     private CartService cartService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        productDao = ArrayListProductDao.getInstance();
         cartService = DefaultCartService.getInstance();
     }
 

@@ -1,6 +1,10 @@
 package com.es.phoneshop.web;
 
-import com.es.phoneshop.cart.Cart;
+import com.es.phoneshop.model.cart.Cart;
+import com.es.phoneshop.model.cart.CartService;
+import com.es.phoneshop.model.cart.DefaultCartService;
+import com.es.phoneshop.model.dao.ArrayListProductDao;
+import com.es.phoneshop.model.dao.ProductDao;
 import com.es.phoneshop.model.product.*;
 
 import javax.servlet.ServletConfig;
@@ -31,7 +35,7 @@ public class ProductDetailsPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long productId = parseProductId(request);
-        request.setAttribute("product", productDao.getProduct(productId));
+        request.setAttribute("product", productDao.get(productId));
         request.setAttribute("cart", cartService.getCart(request));
         response.addCookie(buildCookie(productId, request));
         request.setAttribute("productHistory", ProductHistoryParser.parseProductHistory(request, productDao));

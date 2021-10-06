@@ -1,5 +1,9 @@
 package com.es.phoneshop.web;
 
+import com.es.phoneshop.model.cart.CartService;
+import com.es.phoneshop.model.cart.DefaultCartService;
+import com.es.phoneshop.model.dao.ArrayListProductDao;
+import com.es.phoneshop.model.dao.ProductDao;
 import com.es.phoneshop.model.product.*;
 
 import javax.servlet.ServletConfig;

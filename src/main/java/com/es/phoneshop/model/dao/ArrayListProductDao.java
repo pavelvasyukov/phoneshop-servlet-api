@@ -1,4 +1,8 @@
-package com.es.phoneshop.model.product;
+package com.es.phoneshop.model.dao;
+
+import com.es.phoneshop.model.product.Product;
+import com.es.phoneshop.model.product.SortField;
+import com.es.phoneshop.model.product.SortOrder;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -7,12 +11,9 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class ArrayListProductDao implements ProductDao {
-    private List<Product> products;
-    private long maxId;
+public class ArrayListProductDao extends GenericDao<Product> implements ProductDao {
+    private final List<Product> products;
     private final Object lock = new Object();
-
-
     private static ProductDao instance;
 
     public static synchronized ProductDao getInstance() {
@@ -24,16 +25,6 @@ public class ArrayListProductDao implements ProductDao {
 
     private ArrayListProductDao() {
         this.products = new ArrayList();
-    }
-
-    @Override
-    public Product getProduct(Long id) throws ProductNotFoundException {
-        synchronized (lock) {
-            return products.stream()
-                    .filter(product -> id.equals(product.getId()))
-                    .findAny()
-                    .orElseThrow(() -> new ProductNotFoundException(id));
-        }
     }
 
     @Override
@@ -49,7 +40,7 @@ public class ArrayListProductDao implements ProductDao {
             if (sortOrder == SortOrder.desc) {
                 comparator = comparator.reversed();
             }
-            return products.stream()
+            return itemsList.stream()
                     .filter(product -> query == null || query.isEmpty() ||
                             Pattern.compile(" ").splitAsStream(query)
                                     .allMatch(partQuety -> product.getDescription()
@@ -64,22 +55,10 @@ public class ArrayListProductDao implements ProductDao {
     }
 
     @Override
-    public void save(Product product) {
+    public void delete(Long id) throws Exception {
         synchronized (lock) {
-            if (product.getId() == null) {
-                product.setId(maxId++);
-            }
-            products.add(product);
-        }
-    }
-
-    @Override
-    public void delete(Long id) throws ProductNotFoundException {
-        synchronized (lock) {
-            products.remove(getProduct(id));
+            itemsList.remove(get(id));
 
         }
     }
-
-
 }

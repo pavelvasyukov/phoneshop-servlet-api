@@ -4,10 +4,8 @@ import com.es.phoneshop.model.product.Product;
 import com.es.phoneshop.model.product.SortField;
 import com.es.phoneshop.model.product.SortOrder;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -54,6 +52,28 @@ public class ArrayListProductDao extends GenericDao<Product> implements ProductD
         }
     }
 
+    public List<Product> advancedFindProduct(String query, SearchParameter searchParameter,
+                                             BigDecimal minPrice, BigDecimal maxPrice) {
+        if (query != null || !query.isEmpty()) {
+            if (SearchParameter.anyWord.equals(searchParameter)) {
+                return findProducts(query, null, null).stream()
+                        .filter(product -> product.getPrice().compareTo(maxPrice) <= 0 && product.getPrice().compareTo(minPrice) >= 0)
+                        .collect(Collectors.toList());
+
+            } else {
+                return itemsList.stream()
+                        .filter(product -> product.getPrice() != null)
+                        .filter(product -> product.getStock() > 0)
+                        .filter(product -> product.getPrice().compareTo(maxPrice) <= 0 && product.getPrice().compareTo(minPrice) >= 0)
+                        .filter(product -> product.getDescription()
+                                .toLowerCase(Locale.ROOT)
+                                .contains(query.trim().toLowerCase(Locale.ROOT)))
+                        .collect(Collectors.toList());
+
+            }
+        } else return itemsList;
+    }
+
     @Override
     public void delete(Long id) throws Exception {
         synchronized (lock) {
@@ -61,4 +81,5 @@ public class ArrayListProductDao extends GenericDao<Product> implements ProductD
 
         }
     }
+
 }
